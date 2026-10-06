@@ -8,9 +8,20 @@ A Python integration proof with a real local **OAuthLib** authorization server, 
 
 Independent work by **Ivan Matiushkin with Codex**, using synthetic accounts. Not client history, an OAuth certification, a production identity service or an approved Meta/Google connector.
 
+## Watch the demonstration
+
+Recorded local OAuth recovery report, using a test provider and synthetic accounts.
+
+https://github.com/user-attachments/assets/25ed9775-914b-4c75-a228-e7694fb1e801
+
+<details>
+<summary>View a still frame</summary>
+
 ![Captured recovery report](docs/images/recovery.png)
 
-[Recorded walkthrough](docs/images/walkthrough.webm) · [Case study and buyer fit](docs/CASE-STUDY.md) · [Architecture](docs/ARCHITECTURE.md) · [Verification](docs/VERIFICATION.md) · [Commercial wording](docs/COMMERCIAL-USAGE.md) · [Captured HTML demonstration](evidence/report.html) · [Download the evidence package](https://github.com/Hadezu/oauth-connection-recovery/releases/tag/v0.1.0)
+</details>
+
+[Download original recording](docs/images/walkthrough.webm) · [Case study and buyer fit](docs/CASE-STUDY.md) · [Architecture](docs/ARCHITECTURE.md) · [Verification](docs/VERIFICATION.md) · [Commercial wording](docs/COMMERCIAL-USAGE.md) · [Captured HTML demonstration](evidence/report.html) · [Download the evidence package](https://github.com/Hadezu/oauth-connection-recovery/releases/tag/v0.1.0)
 
 **Verified:** 33 local tests; GitHub CI on Python 3.12/3.14 plus Chromium report checks passed. [Exact evidence](docs/VERIFICATION.md).
 
