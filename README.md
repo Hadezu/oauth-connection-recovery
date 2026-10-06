@@ -1,5 +1,13 @@
 # OAuth Connection Recovery Lab
 
+<!-- portfolio-navigation:start -->
+[← Project index](https://github.com/Hadezu#selected-implementations) · [API integration](https://work.matiushkin.com/en/services/api-integration) · [Describe a similar task](https://work.matiushkin.com/en/contact?example=services%2Fapi-integration)
+
+**Review format:** Local OAuthLib provider and captured recovery evidence. Not a certified vendor connector.
+
+[Adjacent integration example: Data Bridge](https://work.matiushkin.com/en/data-bridge) demonstrates delivery and duplicate-write handling. OAuth authorization and token renewal are a separate failure boundary, demonstrated in this repository.
+<!-- portfolio-navigation:end -->
+
 [![Verify](https://github.com/Hadezu/oauth-connection-recovery/actions/workflows/verify.yml/badge.svg)](https://github.com/Hadezu/oauth-connection-recovery/actions/workflows/verify.yml)
 
 **The provider rotated the refresh token. Its response never reached your application. Is another retry safe?**
