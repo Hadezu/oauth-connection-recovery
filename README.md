@@ -10,7 +10,9 @@ Independent work by **Ivan Matiushkin with Codex**, using synthetic accounts. No
 
 ![Captured recovery report](docs/images/recovery.png)
 
-[Recorded walkthrough](docs/images/walkthrough.webm) · [Case study and buyer fit](docs/CASE-STUDY.md) · [Architecture](docs/ARCHITECTURE.md) · [Verification](docs/VERIFICATION.md) · [Commercial wording](docs/COMMERCIAL-USAGE.md) · [Captured HTML demonstration](evidence/report.html)
+[Recorded walkthrough](docs/images/walkthrough.webm) · [Case study and buyer fit](docs/CASE-STUDY.md) · [Architecture](docs/ARCHITECTURE.md) · [Verification](docs/VERIFICATION.md) · [Commercial wording](docs/COMMERCIAL-USAGE.md) · [Captured HTML demonstration](evidence/report.html) · [Download the evidence package](https://github.com/Hadezu/oauth-connection-recovery/releases/tag/v0.1.0)
+
+**Verified:** 33 local tests; GitHub CI on Python 3.12/3.14 plus Chromium report checks passed. [Exact evidence](docs/VERIFICATION.md).
 
 ## Run it in five minutes
 
