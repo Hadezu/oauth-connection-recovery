@@ -1,0 +1,1 @@
+{"name":"oauth-recovery-report-checks","private":true,"type":"module","scripts":{"test:browser":"node scripts/check-report.mjs"},"devDependencies":{"@playwright/test":"1.63.0"}}
