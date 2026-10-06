@@ -5,7 +5,7 @@
 
 **Review format:** Local OAuthLib provider and captured recovery evidence. Not a certified vendor connector.
 
-[Related interactive example](https://work.matiushkin.com/en/data-bridge) — a separate portfolio demonstration of the same problem.
+[Adjacent integration example: Data Bridge](https://work.matiushkin.com/en/data-bridge) demonstrates delivery and duplicate-write handling. OAuth authorization and token renewal are a separate failure boundary, demonstrated in this repository.
 <!-- portfolio-navigation:end -->
 
 [![Verify](https://github.com/Hadezu/oauth-connection-recovery/actions/workflows/verify.yml/badge.svg)](https://github.com/Hadezu/oauth-connection-recovery/actions/workflows/verify.yml)
