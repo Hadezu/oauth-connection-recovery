@@ -21,6 +21,17 @@ jobs:
       - run: python -m pytest -q --junitxml=test-results/junit.xml
       - run: python -m recovery.demo --out test-results/evidence
       - run: python -m build
+      - name: Install and exercise the built wheel outside the checkout
+        shell: bash
+        run: |
+          python -m venv "$RUNNER_TEMP/oauth-wheel-env"
+          PY="$RUNNER_TEMP/oauth-wheel-env/bin/python"
+          "$PY" -m pip install -c requirements.lock dist/*.whl
+          mkdir -p "$RUNNER_TEMP/oauth-wheel-run"
+          cd "$RUNNER_TEMP/oauth-wheel-run"
+          "$PY" -m recovery.demo --out "$GITHUB_WORKSPACE/test-results/installed-wheel"
+          test -s "$GITHUB_WORKSPACE/test-results/installed-wheel/report.html"
+          test -s "$GITHUB_WORKSPACE/test-results/installed-wheel/report.json"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
