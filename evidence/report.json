@@ -1,0 +1,306 @@
+{
+  "disclosure": "Independent demonstration; synthetic account and local OAuthLib provider. Not a client deployment or vendor approval.",
+  "steps": [
+    {
+      "title": "01 / Connect",
+      "result": {
+        "state": "CONNECTED",
+        "resource": {
+          "records": [
+            {
+              "id": "sample-001",
+              "status": "open"
+            }
+          ]
+        }
+      },
+      "evidence": {
+        "connections": [
+          {
+            "tenant": "sample-team",
+            "status": "CONNECTED",
+            "version": 1
+          }
+        ],
+        "events": [
+          {
+            "seq": 1,
+            "tenant": "sample-team",
+            "status": "AUTHORIZING",
+            "reason": "user_requested_connection"
+          },
+          {
+            "seq": 2,
+            "tenant": "sample-team",
+            "status": "EXCHANGING",
+            "reason": "state_consumed"
+          },
+          {
+            "seq": 3,
+            "tenant": "sample-team",
+            "status": "CONNECTED",
+            "reason": "token_saved"
+          }
+        ]
+      },
+      "provider_rotations": 0
+    },
+    {
+      "title": "02 / Renew access",
+      "result": {
+        "state": "CONNECTED",
+        "rotation": "One refresh, replacement token saved"
+      },
+      "evidence": {
+        "connections": [
+          {
+            "tenant": "sample-team",
+            "status": "CONNECTED",
+            "version": 2
+          }
+        ],
+        "events": [
+          {
+            "seq": 1,
+            "tenant": "sample-team",
+            "status": "AUTHORIZING",
+            "reason": "user_requested_connection"
+          },
+          {
+            "seq": 2,
+            "tenant": "sample-team",
+            "status": "EXCHANGING",
+            "reason": "state_consumed"
+          },
+          {
+            "seq": 3,
+            "tenant": "sample-team",
+            "status": "CONNECTED",
+            "reason": "token_saved"
+          },
+          {
+            "seq": 4,
+            "tenant": "sample-team",
+            "status": "REFRESHING",
+            "reason": "access_expired"
+          },
+          {
+            "seq": 5,
+            "tenant": "sample-team",
+            "status": "CONNECTED",
+            "reason": "token_saved"
+          }
+        ]
+      },
+      "provider_rotations": 1
+    },
+    {
+      "title": "03 / Lose the response",
+      "result": {
+        "state": "UNKNOWN",
+        "reason": "Provider rotated, client timed out"
+      },
+      "evidence": {
+        "connections": [
+          {
+            "tenant": "sample-team",
+            "status": "UNKNOWN",
+            "version": 3
+          }
+        ],
+        "events": [
+          {
+            "seq": 1,
+            "tenant": "sample-team",
+            "status": "AUTHORIZING",
+            "reason": "user_requested_connection"
+          },
+          {
+            "seq": 2,
+            "tenant": "sample-team",
+            "status": "EXCHANGING",
+            "reason": "state_consumed"
+          },
+          {
+            "seq": 3,
+            "tenant": "sample-team",
+            "status": "CONNECTED",
+            "reason": "token_saved"
+          },
+          {
+            "seq": 4,
+            "tenant": "sample-team",
+            "status": "REFRESHING",
+            "reason": "access_expired"
+          },
+          {
+            "seq": 5,
+            "tenant": "sample-team",
+            "status": "CONNECTED",
+            "reason": "token_saved"
+          },
+          {
+            "seq": 6,
+            "tenant": "sample-team",
+            "status": "REFRESHING",
+            "reason": "access_expired"
+          },
+          {
+            "seq": 7,
+            "tenant": "sample-team",
+            "status": "UNKNOWN",
+            "reason": "provider_outcome_unconfirmed"
+          }
+        ]
+      },
+      "provider_rotations": 2
+    },
+    {
+      "title": "04 / Try again",
+      "result": {
+        "state": "BLOCKED",
+        "reason": "No second refresh request sent"
+      },
+      "evidence": {
+        "connections": [
+          {
+            "tenant": "sample-team",
+            "status": "UNKNOWN",
+            "version": 3
+          }
+        ],
+        "events": [
+          {
+            "seq": 1,
+            "tenant": "sample-team",
+            "status": "AUTHORIZING",
+            "reason": "user_requested_connection"
+          },
+          {
+            "seq": 2,
+            "tenant": "sample-team",
+            "status": "EXCHANGING",
+            "reason": "state_consumed"
+          },
+          {
+            "seq": 3,
+            "tenant": "sample-team",
+            "status": "CONNECTED",
+            "reason": "token_saved"
+          },
+          {
+            "seq": 4,
+            "tenant": "sample-team",
+            "status": "REFRESHING",
+            "reason": "access_expired"
+          },
+          {
+            "seq": 5,
+            "tenant": "sample-team",
+            "status": "CONNECTED",
+            "reason": "token_saved"
+          },
+          {
+            "seq": 6,
+            "tenant": "sample-team",
+            "status": "REFRESHING",
+            "reason": "access_expired"
+          },
+          {
+            "seq": 7,
+            "tenant": "sample-team",
+            "status": "UNKNOWN",
+            "reason": "provider_outcome_unconfirmed"
+          }
+        ]
+      },
+      "provider_rotations": 2
+    },
+    {
+      "title": "05 / Reconnect",
+      "result": {
+        "state": "CONNECTED",
+        "resource": {
+          "records": [
+            {
+              "id": "sample-001",
+              "status": "open"
+            }
+          ]
+        }
+      },
+      "evidence": {
+        "connections": [
+          {
+            "tenant": "sample-team",
+            "status": "CONNECTED",
+            "version": 4
+          }
+        ],
+        "events": [
+          {
+            "seq": 1,
+            "tenant": "sample-team",
+            "status": "AUTHORIZING",
+            "reason": "user_requested_connection"
+          },
+          {
+            "seq": 2,
+            "tenant": "sample-team",
+            "status": "EXCHANGING",
+            "reason": "state_consumed"
+          },
+          {
+            "seq": 3,
+            "tenant": "sample-team",
+            "status": "CONNECTED",
+            "reason": "token_saved"
+          },
+          {
+            "seq": 4,
+            "tenant": "sample-team",
+            "status": "REFRESHING",
+            "reason": "access_expired"
+          },
+          {
+            "seq": 5,
+            "tenant": "sample-team",
+            "status": "CONNECTED",
+            "reason": "token_saved"
+          },
+          {
+            "seq": 6,
+            "tenant": "sample-team",
+            "status": "REFRESHING",
+            "reason": "access_expired"
+          },
+          {
+            "seq": 7,
+            "tenant": "sample-team",
+            "status": "UNKNOWN",
+            "reason": "provider_outcome_unconfirmed"
+          },
+          {
+            "seq": 8,
+            "tenant": "sample-team",
+            "status": "AUTHORIZING",
+            "reason": "user_requested_connection"
+          },
+          {
+            "seq": 9,
+            "tenant": "sample-team",
+            "status": "EXCHANGING",
+            "reason": "state_consumed"
+          },
+          {
+            "seq": 10,
+            "tenant": "sample-team",
+            "status": "CONNECTED",
+            "reason": "token_saved"
+          }
+        ]
+      },
+      "provider_rotations": 2
+    }
+  ]
+}

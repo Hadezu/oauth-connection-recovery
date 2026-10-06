@@ -1,0 +1,30 @@
+name: Verify
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.12', '3.14']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install -r requirements.lock
+      - run: python -m pip install --no-deps -e .
+      - run: python -m ruff check recovery tests
+      - run: python -m ruff format --check recovery tests
+      - run: python -m pytest -q --junitxml=test-results/junit.xml
+      - run: python -m recovery.demo --out test-results/evidence
+      - run: python -m build
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evidence-${{ matrix.python }}
+          path: |
+            test-results/
+            dist/

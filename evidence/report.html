@@ -1,0 +1,297 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OAuth Connection Recovery Lab</title><style>*{box-sizing:border-box}body{margin:0;background:#eff2eb;color:#173a36;font:17px/1.6 system-ui}main{max-width:1060px;margin:auto;padding:56px 24px}header{border-bottom:1px solid #748d83;padding-bottom:36px}h1{font-size:clamp(36px,6vw,68px);letter-spacing:-.05em;line-height:1.08;max-width:800px}.eyebrow,.number{font:12px/1.6 monospace;text-transform:uppercase;letter-spacing:.08em;color:#805039}.intro{max-width:720px}article{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:36px}section{background:#fffef7;border:1px solid #a9b8ab;padding:28px;min-width:0}section:nth-child(3){background:#183c36;color:#eef2e6}section:nth-child(3) .number{color:#edc3a2}section:last-child{grid-column:1/-1}h2{font-size:32px;margin:16px 0}.metric{font-size:14px}summary{cursor:pointer;text-decoration:underline;padding:12px 0}pre{font:12px/1.5 monospace;white-space:pre-wrap;overflow-wrap:anywhere}footer{margin-top:36px;font-size:13px}a{color:inherit}a:focus-visible,summary:focus-visible{outline:3px solid #ad6037;outline-offset:4px}@media(max-width:650px){article{grid-template-columns:1fr}main{padding:28px 18px}section{padding:22px}}</style><main><header><p class="eyebrow">Ivan Matiushkin / API integration evidence</p><h1>The token rotated.<br>The response never arrived.</h1><p class="intro">A real local HTTP walkthrough: connect, renew, lose the acknowledgement, stop unsafe retries and reconnect. These are captured outcomes, not animated success counters.</p></header><article><section><p class="number">01 / Connect</p><h2>CONNECTED</h2><p>Protected sample resource read successfully</p><p class="metric">Provider rotations: <b>0</b></p><details><summary>Inspect captured evidence</summary><pre>{
+  &quot;title&quot;: &quot;01 / Connect&quot;,
+  &quot;result&quot;: {
+    &quot;state&quot;: &quot;CONNECTED&quot;,
+    &quot;resource&quot;: {
+      &quot;records&quot;: [
+        {
+          &quot;id&quot;: &quot;sample-001&quot;,
+          &quot;status&quot;: &quot;open&quot;
+        }
+      ]
+    }
+  },
+  &quot;evidence&quot;: {
+    &quot;connections&quot;: [
+      {
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;CONNECTED&quot;,
+        &quot;version&quot;: 1
+      }
+    ],
+    &quot;events&quot;: [
+      {
+        &quot;seq&quot;: 1,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;AUTHORIZING&quot;,
+        &quot;reason&quot;: &quot;user_requested_connection&quot;
+      },
+      {
+        &quot;seq&quot;: 2,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;EXCHANGING&quot;,
+        &quot;reason&quot;: &quot;state_consumed&quot;
+      },
+      {
+        &quot;seq&quot;: 3,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;CONNECTED&quot;,
+        &quot;reason&quot;: &quot;token_saved&quot;
+      }
+    ]
+  },
+  &quot;provider_rotations&quot;: 0
+}</pre></details></section><section><p class="number">02 / Renew access</p><h2>CONNECTED</h2><p>One refresh, replacement token saved</p><p class="metric">Provider rotations: <b>1</b></p><details><summary>Inspect captured evidence</summary><pre>{
+  &quot;title&quot;: &quot;02 / Renew access&quot;,
+  &quot;result&quot;: {
+    &quot;state&quot;: &quot;CONNECTED&quot;,
+    &quot;rotation&quot;: &quot;One refresh, replacement token saved&quot;
+  },
+  &quot;evidence&quot;: {
+    &quot;connections&quot;: [
+      {
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;CONNECTED&quot;,
+        &quot;version&quot;: 2
+      }
+    ],
+    &quot;events&quot;: [
+      {
+        &quot;seq&quot;: 1,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;AUTHORIZING&quot;,
+        &quot;reason&quot;: &quot;user_requested_connection&quot;
+      },
+      {
+        &quot;seq&quot;: 2,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;EXCHANGING&quot;,
+        &quot;reason&quot;: &quot;state_consumed&quot;
+      },
+      {
+        &quot;seq&quot;: 3,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;CONNECTED&quot;,
+        &quot;reason&quot;: &quot;token_saved&quot;
+      },
+      {
+        &quot;seq&quot;: 4,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;REFRESHING&quot;,
+        &quot;reason&quot;: &quot;access_expired&quot;
+      },
+      {
+        &quot;seq&quot;: 5,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;CONNECTED&quot;,
+        &quot;reason&quot;: &quot;token_saved&quot;
+      }
+    ]
+  },
+  &quot;provider_rotations&quot;: 1
+}</pre></details></section><section><p class="number">03 / Lose the response</p><h2>UNKNOWN</h2><p>Provider rotated, client timed out</p><p class="metric">Provider rotations: <b>2</b></p><details><summary>Inspect captured evidence</summary><pre>{
+  &quot;title&quot;: &quot;03 / Lose the response&quot;,
+  &quot;result&quot;: {
+    &quot;state&quot;: &quot;UNKNOWN&quot;,
+    &quot;reason&quot;: &quot;Provider rotated, client timed out&quot;
+  },
+  &quot;evidence&quot;: {
+    &quot;connections&quot;: [
+      {
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;UNKNOWN&quot;,
+        &quot;version&quot;: 3
+      }
+    ],
+    &quot;events&quot;: [
+      {
+        &quot;seq&quot;: 1,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;AUTHORIZING&quot;,
+        &quot;reason&quot;: &quot;user_requested_connection&quot;
+      },
+      {
+        &quot;seq&quot;: 2,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;EXCHANGING&quot;,
+        &quot;reason&quot;: &quot;state_consumed&quot;
+      },
+      {
+        &quot;seq&quot;: 3,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;CONNECTED&quot;,
+        &quot;reason&quot;: &quot;token_saved&quot;
+      },
+      {
+        &quot;seq&quot;: 4,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;REFRESHING&quot;,
+        &quot;reason&quot;: &quot;access_expired&quot;
+      },
+      {
+        &quot;seq&quot;: 5,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;CONNECTED&quot;,
+        &quot;reason&quot;: &quot;token_saved&quot;
+      },
+      {
+        &quot;seq&quot;: 6,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;REFRESHING&quot;,
+        &quot;reason&quot;: &quot;access_expired&quot;
+      },
+      {
+        &quot;seq&quot;: 7,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;UNKNOWN&quot;,
+        &quot;reason&quot;: &quot;provider_outcome_unconfirmed&quot;
+      }
+    ]
+  },
+  &quot;provider_rotations&quot;: 2
+}</pre></details></section><section><p class="number">04 / Try again</p><h2>BLOCKED</h2><p>No second refresh request sent</p><p class="metric">Provider rotations: <b>2</b></p><details><summary>Inspect captured evidence</summary><pre>{
+  &quot;title&quot;: &quot;04 / Try again&quot;,
+  &quot;result&quot;: {
+    &quot;state&quot;: &quot;BLOCKED&quot;,
+    &quot;reason&quot;: &quot;No second refresh request sent&quot;
+  },
+  &quot;evidence&quot;: {
+    &quot;connections&quot;: [
+      {
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;UNKNOWN&quot;,
+        &quot;version&quot;: 3
+      }
+    ],
+    &quot;events&quot;: [
+      {
+        &quot;seq&quot;: 1,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;AUTHORIZING&quot;,
+        &quot;reason&quot;: &quot;user_requested_connection&quot;
+      },
+      {
+        &quot;seq&quot;: 2,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;EXCHANGING&quot;,
+        &quot;reason&quot;: &quot;state_consumed&quot;
+      },
+      {
+        &quot;seq&quot;: 3,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;CONNECTED&quot;,
+        &quot;reason&quot;: &quot;token_saved&quot;
+      },
+      {
+        &quot;seq&quot;: 4,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;REFRESHING&quot;,
+        &quot;reason&quot;: &quot;access_expired&quot;
+      },
+      {
+        &quot;seq&quot;: 5,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;CONNECTED&quot;,
+        &quot;reason&quot;: &quot;token_saved&quot;
+      },
+      {
+        &quot;seq&quot;: 6,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;REFRESHING&quot;,
+        &quot;reason&quot;: &quot;access_expired&quot;
+      },
+      {
+        &quot;seq&quot;: 7,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;UNKNOWN&quot;,
+        &quot;reason&quot;: &quot;provider_outcome_unconfirmed&quot;
+      }
+    ]
+  },
+  &quot;provider_rotations&quot;: 2
+}</pre></details></section><section><p class="number">05 / Reconnect</p><h2>CONNECTED</h2><p>Protected sample resource read successfully</p><p class="metric">Provider rotations: <b>2</b></p><details><summary>Inspect captured evidence</summary><pre>{
+  &quot;title&quot;: &quot;05 / Reconnect&quot;,
+  &quot;result&quot;: {
+    &quot;state&quot;: &quot;CONNECTED&quot;,
+    &quot;resource&quot;: {
+      &quot;records&quot;: [
+        {
+          &quot;id&quot;: &quot;sample-001&quot;,
+          &quot;status&quot;: &quot;open&quot;
+        }
+      ]
+    }
+  },
+  &quot;evidence&quot;: {
+    &quot;connections&quot;: [
+      {
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;CONNECTED&quot;,
+        &quot;version&quot;: 4
+      }
+    ],
+    &quot;events&quot;: [
+      {
+        &quot;seq&quot;: 1,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;AUTHORIZING&quot;,
+        &quot;reason&quot;: &quot;user_requested_connection&quot;
+      },
+      {
+        &quot;seq&quot;: 2,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;EXCHANGING&quot;,
+        &quot;reason&quot;: &quot;state_consumed&quot;
+      },
+      {
+        &quot;seq&quot;: 3,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;CONNECTED&quot;,
+        &quot;reason&quot;: &quot;token_saved&quot;
+      },
+      {
+        &quot;seq&quot;: 4,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;REFRESHING&quot;,
+        &quot;reason&quot;: &quot;access_expired&quot;
+      },
+      {
+        &quot;seq&quot;: 5,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;CONNECTED&quot;,
+        &quot;reason&quot;: &quot;token_saved&quot;
+      },
+      {
+        &quot;seq&quot;: 6,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;REFRESHING&quot;,
+        &quot;reason&quot;: &quot;access_expired&quot;
+      },
+      {
+        &quot;seq&quot;: 7,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;UNKNOWN&quot;,
+        &quot;reason&quot;: &quot;provider_outcome_unconfirmed&quot;
+      },
+      {
+        &quot;seq&quot;: 8,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;AUTHORIZING&quot;,
+        &quot;reason&quot;: &quot;user_requested_connection&quot;
+      },
+      {
+        &quot;seq&quot;: 9,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;EXCHANGING&quot;,
+        &quot;reason&quot;: &quot;state_consumed&quot;
+      },
+      {
+        &quot;seq&quot;: 10,
+        &quot;tenant&quot;: &quot;sample-team&quot;,
+        &quot;status&quot;: &quot;CONNECTED&quot;,
+        &quot;reason&quot;: &quot;token_saved&quot;
+      }
+    ]
+  },
+  &quot;provider_rotations&quot;: 2
+}</pre></details></section></article><footer>Independent demonstration; synthetic account and local OAuthLib provider. Not a client deployment or vendor approval.</footer></main></html>
