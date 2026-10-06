@@ -8,20 +8,9 @@ A Python integration proof with a real local **OAuthLib** authorization server, 
 
 Independent work by **Ivan Matiushkin with Codex**, using synthetic accounts. Not client history, an OAuth certification, a production identity service or an approved Meta/Google connector.
 
-## Watch the demonstration
-
-Recorded local OAuth recovery report, using a test provider and synthetic accounts.
-
-https://github.com/user-attachments/assets/25ed9775-914b-4c75-a228-e7694fb1e801
-
-<details>
-<summary>View a still frame</summary>
-
 ![Captured recovery report](docs/images/recovery.png)
 
-</details>
-
-[Download original recording](docs/images/walkthrough.webm) · [Case study and buyer fit](docs/CASE-STUDY.md) · [Architecture](docs/ARCHITECTURE.md) · [Verification](docs/VERIFICATION.md) · [Commercial wording](docs/COMMERCIAL-USAGE.md) · [Captured HTML demonstration](evidence/report.html) · [Download the evidence package](https://github.com/Hadezu/oauth-connection-recovery/releases/tag/v0.1.0)
+[Case study and buyer fit](docs/CASE-STUDY.md) · [Architecture](docs/ARCHITECTURE.md) · [Verification](docs/VERIFICATION.md) · [Commercial wording](docs/COMMERCIAL-USAGE.md) · [Captured HTML demonstration](evidence/report.html) · [Download the evidence package](https://github.com/Hadezu/oauth-connection-recovery/releases/tag/v0.1.0)
 
 **Verified:** 33 local tests; GitHub CI on Python 3.12/3.14 plus Chromium report checks passed. [Exact evidence](docs/VERIFICATION.md).
 
@@ -69,3 +58,12 @@ Our contribution: `recovery/client.py` lifecycle/vault, provider adapter and fau
 ## Boundary before any real deployment
 
 The provider deliberately auto-approves a synthetic user and stores its fixtures in memory. Only loopback HTTP origins are accepted. Tenant arguments are supplied by trusted application code; this library is **not an authentication/authorization layer for callers**. Production needs HTTPS, actual user consent, authenticated tenant binding, managed keys/rotation, vendor-specific scopes and review, recovery UX and operational monitoring. Do not expose this lab to the Internet.
+
+<details>
+<summary>Technical verification recording</summary>
+
+Original test recording retained as supporting evidence. For the scenario, results and limitations, see the verification documentation above.
+
+[Download the original recording](docs/images/walkthrough.webm)
+
+</details>
