@@ -1,26 +1,21 @@
-# Buyer need → implemented evidence
+# OAuth connections that recover with a clear state
 
-Reviewed 2026-10-06. Sources are requirements evidence, not contacted prospects or a claim that these positions remain open.
+## Business problem
 
-## Primary buyer evidence
+An integration needs more than a successful login. Expired tokens, concurrent callers and a lost refresh response can leave the application uncertain about which credentials remain valid.
 
-[Backend Developer for OAuth and Social Media Analytics API Integration](https://www.upwork.com/freelance-jobs/apply/Backend-Developer-for-OAuth-and-Social-Media-Analytics-API-Integration_~022088343691184645548/) was publicly readable during this review (listed as posted two months ago). The buyer asks for a bounded OAuth proof of concept, protected token storage, renewal/reconnection and maintainable source/setup documentation. This project addresses those mechanisms. It does **not** supply social metrics, platform approvals or the complete requested portal.
+## Implemented solution
 
-[Multi-tenant dashboard integration requirement](https://www.upwork.com/freelance-jobs/apply/Backend-developer-for-multi-tenant-SaaS-dashboard-Supabase-React-OAuth-integrations_~022097117378203702614/) independently asks for isolated access/refresh credentials and encrypted storage. Our tenant-bound ciphertext and lookup tests are relevant but do not prove a production multi-tenant SaaS.
+Implemented authorization with PKCE, encrypted SQLite token storage, durable refresh ownership, version fences and explicit reconnection after an ambiguous rotation.
 
-## Fit with the existing offering
+## Inspect the result
 
-The live `/en/services/api-integration` page was fetched with HTTP 200: one data flow, authentication feasibility, logs, tests and agreed failure handling. The existing Data Bridge page demonstrates flow reliability. This project supplies the missing renewable authorization boundary.
+The captured local OAuthLib-provider walkthrough follows authorization, refresh, ambiguity and restored access. The verification record includes 33 local tests and hosted CI on Python 3.12/3.14.
 
-Reviewed public repository inventory: work-portfolio, atomic-crm-import-review, fastapi-webhook-reliability, resilience4j-retry-review, reconciliation-evidence-workbench, operations-approval-desk and llm-extraction-release-gate. PostgreSQL Import Rehearsal is explicitly excluded because another task is implementing it. Their README scope overlaps API/data work, but none provides this OAuth token-lifecycle proof. No existing repository or production website was changed.
+[Implementation and demonstration](../README.md) · [Recorded verification](VERIFICATION.md)
 
-## Acceptance before implementation
+## Apply this to your business
 
-1. Real OAuthLib code exchange over HTTP with S256 PKCE and one-use state.
-2. Tokens encrypted in a persistent local vault, bound to the supplied tenant key.
-3. Concurrent access cannot issue duplicate refresh grants.
-4. Lost response / malformed output / unexpected scope / 5xx stops in UNKNOWN.
-5. Invalid grant requires reauthorization; a new authorization restores access.
-6. Durable in-flight state survives process exit; stale completions are fenced.
-7. Auditable transitions and downloadable evidence contain no secrets.
-8. Repeatable setup, failure tests and independently executed CI.
+The same mechanisms can support a new application, an integration or an improvement to your existing system. Scope and acceptance checks are agreed around your workflow. **[Discuss your project](https://work.matiushkin.com/en/contact)**.
+
+[Requirement research and project context](REQUIREMENT-RESEARCH.md) · [Verification scope](../PRESENTATION-SCOPE.md)
