@@ -1,20 +1,19 @@
-# OAuth Connection Recovery Lab
+# OAuth Connection Recovery — controlled token renewal
+
+Keep connection state traceable through token expiry, concurrent refresh attempts and lost responses. The implementation combines PKCE, encrypted token storage, durable refresh ownership and an explicit reconnection path.
 
 <!-- portfolio-navigation:start -->
 [← Project index](https://github.com/Hadezu#selected-implementations) · [API integration](https://work.matiushkin.com/en/services/api-integration) · [Describe a similar task](https://work.matiushkin.com/en/contact?example=services%2Fapi-integration)
 
-**Review format:** Local OAuthLib provider and captured recovery evidence. Not a certified vendor connector.
 
 [Adjacent integration example: Data Bridge](https://work.matiushkin.com/en/data-bridge) demonstrates delivery and duplicate-write handling. OAuth authorization and token renewal are a separate failure boundary, demonstrated in this repository.
 <!-- portfolio-navigation:end -->
 
 [![Verify](https://github.com/Hadezu/oauth-connection-recovery/actions/workflows/verify.yml/badge.svg)](https://github.com/Hadezu/oauth-connection-recovery/actions/workflows/verify.yml)
 
-**The provider rotated the refresh token. Its response never reached your application. Is another retry safe?**
+**Handle ambiguous token rotation with durable state and an explicit recovery decision.**
 
-A Python integration proof with a real local **OAuthLib** authorization server, HTTP requests, PKCE, an encrypted SQLite token vault, durable refresh ownership and explicit reconnection after an ambiguous result.
-
-Independent work by **Ivan Matiushkin with Codex**, using synthetic accounts. Not client history, an OAuth certification, a production identity service or an approved Meta/Google connector.
+The reproducible implementation uses a real local **OAuthLib** authorization server, HTTP requests, PKCE, an encrypted SQLite token vault, durable refresh ownership and explicit reconnection after an ambiguous result.
 
 ![Captured recovery report](docs/images/recovery.png)
 
@@ -75,3 +74,10 @@ Original test recording retained as supporting evidence. For the scenario, resul
 [Download the original recording](docs/images/walkthrough.webm)
 
 </details>
+
+
+## Discuss a similar project
+
+I develop complete applications, integrations and focused improvements to existing software. Send the workflow you want to improve and the outcome you need; we can define the scope, delivery stages and acceptance checks together.
+
+**[Discuss your project](https://work.matiushkin.com/en/contact)** · [More implementations](https://github.com/Hadezu) · [Project context and verification scope](PRESENTATION-SCOPE.md)
